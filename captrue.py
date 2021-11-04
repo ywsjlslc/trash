@@ -23,6 +23,9 @@ def level(Id , cnt):
 	while 1: 
 		try: 	
 			info = json.loads(requests.get(url).text)
+			if info["code"] == -404 : 
+				print(f'{cnt}\tlv.-1\tuid:{Id:<15}name: 已注销用户')
+				return [7 , cnt + 1]
 			text = info["data"]["level"]
 			print(f'{cnt}\tlv.{text}\tuid:{Id:<15}name: {info["data"]["name"]}')
 			break
@@ -43,8 +46,8 @@ def Cnt(info , a , cnt):
 	return [a , cnt]
 	
 def main(Id , ruid): 
-	a = [0 , 0 , 0 , 0 , 0 , 0 , 0]
-	page = 1 
+	a = [0 , 0 , 0 , 0 , 0 , 0 , 0 , 0]
+	page = 1
 	cnt = 1
 	url = "https://api.live.bilibili.com/xlive/app-room/v2/guardTab/topList?roomid="+ str(Id) +"&page=1&ruid="+ str(ruid) +"&page_size=30"
 	text = json.loads(requests.get(url).text)
